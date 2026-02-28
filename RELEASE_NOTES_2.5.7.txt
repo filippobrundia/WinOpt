@@ -1,19 +1,29 @@
-WinOpt 2.5.7 - RELEASE DEFINITIVA
+﻿WinOpt 2.5.7 — prima release pubblica
 
-Base: WinOpt_2.5.7_HF1 (Claude release package) + consolidamento.
+Suite modulare di script PowerShell per ottimizzare Windows 11.
 
-Fix strutturali:
-- LAUNCHER.cmd: line endings normalizzati (CRLF), eliminato CRCRLF.
-- UAC quoting: basato su %~f0 (robusto con spazi/parentesi).
-- RUNADMIN/RUNUSER: consolidati su RUNSCRIPT con enforcement (net session) per ADMIN.
-- Assert-Admin: funzione in Modules\_COMMON\Common.ps1 produce messaggio chiaro + exit 1 (niente throw).
-- Assert-Admin: presente in tutti i moduli Admin come safety net per lancio diretto (exit 1 con messaggio). Centralizzata in Common.ps1, non duplicata.
-- Versioning: aggiornati README/Docs/Launcher a 2.5.7.
-- Aggiunto MANIFEST_SHA256.txt per integrità bit-per-bit della release.
+Cosa include questa release:
+- Baseline completa: privacy, telemetria, CEIP, Advertising ID
+- UI/UX: dark mode, menu contestuale classico, ottimizzazioni shell
+- OneDrive: disabilita/riabilita con backup completo
+- Edge: policy sicure senza rompere il browser
+- Clean: pulizia temp, cache, bloatware
+- Verify: diagnostica sistema post-ottimizzazione
+- Launcher intuitivo con menu numerato
 
-Fix post-release (2.5.7-p1):
-- ONEDRIVE_MENU: riscritto con label esplicite (:OD_ON, :OD_OFF, :OD_VERIFY).
-  Il pattern (call :RUNADMIN ... & goto :EOF) dentro blocco IF causava chiusura
-  anticipata della finestra senza mostrare la schermata POST con i risultati.
-- MANIFEST_SHA256.txt: aggiornato per includere i file corretti post-patch.
+Per chi e':
+Chi vuole un Windows 11 piu' leggero, privato e veloce — che abbia 4GB o 32GB di RAM.
+Ideale anche per chi formatta e vuole partire subito con un sistema ottimizzato.
 
+Perche' funziona davvero:
+Ogni chiave di registro, ogni tweak e ogni ottimizzazione inclusa e' stata testata
+personalmente. Niente copiato alla cieca da internet: solo quello che funziona,
+che fa la differenza e che non rompe niente — Defender, Store, Windows Update
+e le periferiche restano intatti.
+
+Come si usa:
+1. Scarica lo zip
+2. Estrai in una cartella senza parentesi nel percorso
+3. Lancia LAUNCHER.cmd come Amministratore
+
+Testato su Windows 11 23H2, 24H2 e 25H2.
