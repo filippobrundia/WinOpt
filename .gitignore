@@ -1,0 +1,20 @@
+# Log generati dalla suite sul PC dell'utente
+C:/WinOpt/
+
+# File di sistema Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# File temporanei editor
+*.tmp
+*~
+.DS_Store
+
+# Output di test locali
+test-output/
+scratch/
+
+# Chiavi o configurazioni private (non commettere mai)
+*.key
+*.secret

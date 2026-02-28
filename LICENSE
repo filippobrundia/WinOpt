@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 filippobrundia
+Copyright (c) 2025-2026 WinOpt Contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +19,19 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+---
+
+DISCLAIMER AGGIUNTIVO
+
+L'utilizzo di questa suite comporta modifiche al registro di sistema, ai servizi
+Windows e alle impostazioni di rete. L'autore non è responsabile per eventuali
+danni a dati, software, hardware o configurazioni di sistema derivanti
+dall'utilizzo, corretto o scorretto, di questi script.
+
+Prima di eseguire qualsiasi modifica:
+- Crea un backup del sistema (lo script crea automaticamente un Restore Point)
+- Verifica di avere accesso a un supporto di recovery Windows
+- Leggi la documentazione e comprendi cosa fa ogni modulo
+
+USO A PROPRIO RISCHIO.

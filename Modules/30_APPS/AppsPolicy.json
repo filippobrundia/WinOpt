@@ -1,0 +1,37 @@
+{
+  "PolicyVersion": "2.0",
+  "Apps": [
+    {
+      "Name": "ONLYOFFICE Desktop Editors",
+      "Id": "ONLYOFFICE.DesktopEditors"
+    },
+    {
+      "Name": "7-Zip",
+      "Id": "7zip.7zip"
+    },
+    {
+      "Name": "SumatraPDF",
+      "Id": "SumatraPDF.SumatraPDF"
+    },
+    {
+      "Name": "Everything",
+      "Id": "voidtools.Everything"
+    },
+    {
+      "Name": "MPC-BE",
+      "Id": "MPC-BE.MPC-BE"
+    },
+    {
+      "Name": "WizTree",
+      "Id": "AntibodySoftware.WizTree"
+    },
+    {
+      "Name": "ShareX",
+      "Id": "ShareX.ShareX"
+    },
+    {
+      "Name": "Notepad++",
+      "Id": "Notepad++.Notepad++"
+    }
+  ]
+}
