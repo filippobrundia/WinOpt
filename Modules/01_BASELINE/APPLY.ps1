@@ -53,7 +53,7 @@ if ($baseWSearchEnabled) {
     Set-ServiceStart $Log "WSearch" "Automatic"; Start-ServiceSafe $Log "WSearch"
     Write-Log $Log "BASE: WSearch attivo (default). Disabilitalo solo se sai cosa perdi (Start/Explorer/Outlook search)." "INFO"
 } else {
-    Write-Log $Log "BASE: WSearch disabilitato via config. Nota: ricerca Start/Explorer può diventare più lenta." "WARN"
+    Write-Log $Log "BASE: WSearch disabled via config. Note: Start/Explorer search may become slower." "WARN"
     Set-ServiceStart $Log "WSearch" "Disabled"; Stop-ServiceSafe $Log "WSearch"
 }
 

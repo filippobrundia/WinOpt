@@ -190,7 +190,7 @@ try {
 Write-Log $Log ""
 Write-Log $Log "======= SOMMARIO AUDIT DIRTY PC ======="
 Write-Log $Log ("Programmi sospetti trovati:  {0}" -f $foundSuspicious.Count) $(if ($foundSuspicious.Count -gt 0) {"WARN"} else {"OK"})
-Write-Log $Log "Vedi le righe [WARN] per tutto ciò che richiede attenzione."
+Write-Log $Log "Check [WARN] lines for everything that requires attention."
 Write-Log $Log "======================================="
 
 Write-Log $Log "=== AUDIT DIRTY PC END ===" "INFO"

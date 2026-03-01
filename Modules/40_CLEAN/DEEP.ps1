@@ -55,7 +55,7 @@ foreach ($s in $wuSvcs) {
 }
 
 # DISM StartComponentCleanup
-Write-Log $Log "--- DISM StartComponentCleanup (attendere, può richiedere minuti) ---"
+Write-Log $Log "--- DISM StartComponentCleanup (please wait, may take several minutes) ---"
 try {
     $outFile = Join-Path $env:TEMP ("WOC_DISM_DEEP_{0}.txt" -f (Get-Date -Format "yyyyMMdd_HHmmss"))
     $errFile = $outFile -replace "\.txt$", "_err.txt"

@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 <#  WIN_OPT_CLAUDE - 02_UIUX - APPLY (utente corrente, no admin richiesto)
     v1.3.1 - TaskbarDa HKCU rimosso: chiave owned da TrustedInstaller, scrittura
-             negata anche da admin. I widget taskbar sono già bloccati dalla policy
+             denied even for admin. Taskbar widgets are already blocked by policy
              HKLM Dsh\AllowNewsAndInterests=0 impostata da 01_BASELINE.
 #>
 

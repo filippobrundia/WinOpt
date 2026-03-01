@@ -72,7 +72,7 @@ function Start-ServiceSafe {
                 Write-Log $Log ("SERVICE START {0} WARN (stato finale: {1})" -f $Name, $svc.Status) "WARN"
             }
         } else {
-            Write-Log $Log ("SERVICE START SKIP {0} già Running" -f $Name) "SKIP"
+            Write-Log $Log ("SERVICE START SKIP {0} already Running" -f $Name) "SKIP"
         }
     } catch {
         Write-Log $Log ("SERVICE START WARN {0} ({1})" -f $Name, $_.Exception.Message) "WARN"
@@ -152,7 +152,7 @@ function Set-RegDword {
         } catch { }
 
         if ($curExists -and $curVal -eq $Value) {
-            Write-Log $Log ("REG SKIP {0}\{1} già = {2}" -f $KeyPath, $Name, $Value) "SKIP"
+            Write-Log $Log ("REG SKIP {0}\{1} already = {2}" -f $KeyPath, $Name, $Value) "SKIP"
             return
         }
 
@@ -183,7 +183,7 @@ function Set-RegString {
         } catch { }
 
         if ($curExists -and $curVal -eq $Value) {
-            Write-Log $Log ("REG SKIP {0}\{1} già = {2}" -f $KeyPath, $Name, $Value) "SKIP"
+            Write-Log $Log ("REG SKIP {0}\{1} already = {2}" -f $KeyPath, $Name, $Value) "SKIP"
             return
         }
 
@@ -592,7 +592,7 @@ function Pause-WinOptIfInteractive {
       Keeps the PowerShell window open only when launched outside the launcher.
       - Launcher sets env WINOPT_FROM_LAUNCHER=1 E scrive un flag file in WOC_STATE_ROOT.
         Il flag file sopravvive all'elevazione UAC (il processo elevato non eredita l'env
-        del CMD parent, ma può leggere il file su disco).
+        of CMD parent, but can read the file from disk).
       - Double-click / manual run => pauses to allow reading output.
       - Can be forced off with $env:WINOPT_NO_PAUSE=1
     #>

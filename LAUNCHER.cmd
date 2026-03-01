@@ -35,7 +35,7 @@ rem ==================================================
 net session >nul 2>&1
 if errorlevel 1 (
 echo.
-echo [UAC] Richiesti privilegi amministrativi. Elevazione...
+echo [UAC] Administrator privileges required. Elevating...
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
   "Start-Process -FilePath $env:ComSpec -ArgumentList @('/k', '""%~f0"" _LAUNCHED') -Verb RunAs"
 exit
@@ -52,7 +52,7 @@ echo  1) QUICK STABLE (BASELINE + EDGE + UIUX + VERIFY)
 echo.
 echo  2) BASELINE APPLY                 (Admin)
 echo  3) EDGE APPLY                     (Admin)
-echo  4) UIUX APPLY (Prestazioni)       (User)
+echo  4) UIUX APPLY (Performance)       (User)
 echo  5) VERIFY                         (Admin)
 echo  6) VERIFY DEEP                    (Admin  + Clean Audit)
 echo.
@@ -64,13 +64,13 @@ echo 11) CLEAN DEEP                     (Admin)
 echo.
 echo 12) STARTUP CLEAN                  (Admin)
 echo.
-echo  --- LAB (SPERIMENTALE) ---
+echo  --- LAB (EXPERIMENTAL) ---
 echo 13) LAB POWER BOOST                (Admin)
 echo.
 
-echo  0) Esci
+echo  0) Exit
 echo.
-set /p "CHOICE=Seleziona: "
+set /p "CHOICE=Select: "
 
 if "!CHOICE!"==""   goto :MENU
 if "!CHOICE!"=="0"  goto :EXIT_OK
@@ -88,7 +88,7 @@ if "!CHOICE!"=="11" goto :DO_11
 if "!CHOICE!"=="12" goto :DO_12
 if "!CHOICE!"=="13" goto :DO_13
 echo.
-echo  [WARN] Scelta non valida: !CHOICE!
+echo  [WARN] Invalid choice: !CHOICE!
 timeout /t 2 >nul
 goto :MENU
 
@@ -136,18 +136,18 @@ goto :POST
 rem ==================================================
 :EXIT_OK
 echo.
-echo Arrivederci.
+echo Goodbye.
 timeout /t 2 >nul
 exit /b 0
 
 rem ==================================================
 :QUICK_STABLE
 echo.
-echo [QUICK STABLE] Avvio sequenza: BASELINE - EDGE - UIUX - VERIFY
+echo [QUICK STABLE] Running sequence: BASELINE - EDGE - UIUX - VERIFY
 echo.
 echo.
-echo Questa sequenza gira in un'unica sessione elevata (UAC singolo).
-echo I codici di uscita ora riflettono l'esito reale di ogni modulo.
+echo This sequence runs in a single elevated session (single UAC).
+echo Exit codes reflect the actual result of each module.
 echo Log: %LOGS%
 echo.
 
@@ -177,11 +177,11 @@ echo  EDGE      : !QS_EDGE!
 echo  UIUX      : !QS_UIUX!
 echo  VERIFY    : !QS_VERIFY!
 echo ==================================================
-echo  Exitcode = esito reale dello script.
-echo  Dettagli completi nei log: %LOGS%
+echo  Exitcode = actual script result.
+echo  Full details in logs: %LOGS%
 echo ==================================================
 echo.
-echo  Riavvia Windows per attivare le policy Edge.
+echo  Restart Windows to activate Edge policies.
 echo.
 echo ==================================================
 echo.
@@ -190,7 +190,7 @@ exit /b 0
 
 :QUICK_FAIL
 echo.
-echo [ERRORE] QUICK STABLE interrotto. Log in: %LOGS%
+echo [ERROR] QUICK STABLE interrupted. Log in: %LOGS%
 del /f /q "%STATE%\launcher.flag" >nul 2>&1
 exit /b 1
 
@@ -210,19 +210,19 @@ echo ==================================================
 echo                 ONEDRIVE CONTROL
 echo ==================================================
 echo.
-echo  1) OneDrive ON    (riabilita)
-echo  2) OneDrive OFF   (disabilita)
+echo  1) OneDrive ON    (enable)
+echo  2) OneDrive OFF   (disable)
 echo  3) OneDrive STATUS
-echo  0) Indietro
+echo  0) Back
 echo.
-set /p "ODC=Seleziona: "
+set /p "ODC=Select: "
 if "!ODC!"==""  goto :ONEDRIVE_MENU
 if "!ODC!"=="0" exit /b 0
 if "!ODC!"=="1" goto :OD_ON
 if "!ODC!"=="2" goto :OD_OFF
 if "!ODC!"=="3" goto :OD_VERIFY
 echo.
-echo  [WARN] Opzione non valida. Usa 0 per tornare al menu principale.
+echo  [WARN] Invalid option. Use 0 to return to main menu.
 timeout /t 2 >nul
 goto :ONEDRIVE_MENU
 
@@ -249,7 +249,7 @@ if exist "%STATE%\last_step.txt"     set /p LAST_STEP=<"%STATE%\last_step.txt"
 if exist "%STATE%\last_exitcode.txt" set /p LAST_EC=<"%STATE%\last_exitcode.txt"
 del /f /q "%STATE%\launcher.flag" >nul 2>&1
 echo ==================================================
-echo RISULTATO: !LAST_STATUS!   ExitCode=!LAST_EC!
+echo RESULT: !LAST_STATUS!   ExitCode=!LAST_EC!
 echo STEP:      !LAST_STEP!
 echo Logs:      %LOGS%
 echo ==================================================
@@ -258,12 +258,12 @@ rem -- avviso riavvio solo per moduli che lo richiedono --
 echo !LAST_STEP! | findstr /I "01_BASELINE 10_ULTRA 90_LAB 01_POWER_BOOST" >nul 2>&1
 if not errorlevel 1 (
     echo.
-    echo  ** RIAVVIO CONSIGLIATO **
-    echo  Alcune modifiche (pagefile, 8.3 names, Multimedia Profile)
-    echo  diventano attive solo dopo il riavvio del sistema.
+    echo  ** RESTART RECOMMENDED **
+    echo  Some changes (pagefile, 8.3 names, Multimedia Profile)
+    echo  will only take effect after a system restart.
     echo.
 )
-echo  [L] Apri Logs    [M] Menu    [Q] Esci
+echo  [L] Open Logs    [M] Menu    [Q] Exit
 echo.
 set /p "AFTER=> "
 if /I "!AFTER!"=="L" start "" "%LOGS%"
@@ -289,7 +289,7 @@ set "SCRIPT=%~2"
 
 if not exist "!SCRIPT!" goto :RUNSCRIPT_ERR
 
-rem -- calcola percorso relativo per output più pulito --
+rem -- calculate relative path for cleaner output --
 set "REL=!SCRIPT:%ROOT%=!"
 if "!REL:~0,1!"=="\" set "REL=!REL:~1!"
 rem -- estrai nome modulo breve (es. 01_BASELINE) da Modules\NomeModulo\Script.ps1 --
@@ -301,8 +301,8 @@ if /I "!MODE!"=="ADMIN" (
     net session >nul 2>&1
     if errorlevel 1 (
         echo.
-        echo [ERRORE] Questo modulo richiede privilegi amministrativi.
-        echo         Avvia LAUNCHER.cmd come amministratore.
+        echo [ERROR] This module requires administrator privileges.
+        echo         Run LAUNCHER.cmd as administrator.
         >"!STATE!\last_status.txt"   echo FAIL
         >"!STATE!\last_step.txt"     echo !MOD_SHORT!
         >"!STATE!\last_exitcode.txt" echo 1
@@ -333,7 +333,7 @@ if "!REL:~0,1!"=="\" set "REL=!REL:~1!"
 set "MOD_SHORT=!REL!"
 set "MOD_SHORT=!MOD_SHORT:Modules\=!"
 for /f "delims=\" %%A in ("!MOD_SHORT!") do set "MOD_SHORT=%%A"
-echo [ERRORE] Script non trovato: !REL!
+echo [ERROR] Script not found: !REL!
 >"!STATE!\last_status.txt"   echo FAIL
 >"!STATE!\last_step.txt"     echo !MOD_SHORT!
 >"!STATE!\last_exitcode.txt" echo 1

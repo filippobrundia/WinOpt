@@ -7,7 +7,7 @@
       - Disabilita le voci note come non essenziali / bloatware
       - Conserva le voci di sistema, AV, driver essenziali
       - Backup completo prima di qualsiasi modifica
-      - NON tocca: Task Scheduler, servizi (già gestiti da BASELINE/ULTRA)
+      - DO NOT touch: Task Scheduler, services (already managed by BASELINE/ULTRA)
 #>
 
 . "$PSScriptRoot\..\_COMMON\Common.ps1"
