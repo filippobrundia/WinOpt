@@ -1,174 +1,184 @@
 # WinOpt
 
-> **Windows 11 come dovrebbe essere** — privacy, prestazioni e zero bloat, riproducibile ad ogni reinstallazione.
+> **Windows 11 the way it should be** — privacy, performance and zero bloat, reproducible on every reinstall.
 
 ![Windows 11](https://img.shields.io/badge/Windows-11-0078D4?logo=windows11)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-5391FE?logo=powershell)
-![Versione](https://img.shields.io/badge/versione-2.5.7-brightgreen)
-![Licenza](https://img.shields.io/badge/licenza-MIT-blue)
+![Version](https://img.shields.io/badge/version-2.5.8-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-blue)
 
 ---
 
-## Il problema che risolve
-
-Windows 11 esce dalla fabbrica con telemetria attiva, Copilot, OneDrive, decine di servizi inutili e app preinstallate che non hai chiesto. Puoi disabilitarli uno a uno — ma alla prossima reinstallazione ricomincia tutto da capo.
-
-WinOpt è una suite di script che esegui **una volta** dopo una installazione pulita di Windows 11 e ottieni una macchina silenziosa, privata e veloce. L'esperienza di chi usa Windows LTSC, senza dover comprare una licenza volume o rinunciare allo Store e agli aggiornamenti di sicurezza.
-
-**Per chi è pensato**
-
-- Chi reinstalla Windows spesso e vuole automatizzare le ottimizzazioni
-- Chi gestisce più PC e vuole configurazioni riproducibili
-- Power user, orientati alla privacy, gamer che vogliono ridurre il rumore in background
-- Chi vuole capire cosa viene modificato (tutto è documentato e loggato)
-
-**Non è pensato per**
-
-- Chi usa attivamente OneDrive, Teams consumer, Copilot o Windows Recall
-- Ambienti aziendali gestiti da MDM/Intune
-- Chi preferisce mantenere Windows nella configurazione predefinita Microsoft
+> ⚠️ **This tool is designed for personal devices only.**
+> Do not run on corporate, managed, or MDM/Intune-enrolled machines.
+> If you are a sysadmin looking for enterprise hardening, use CIS Baselines or Microsoft Security Baselines instead.
 
 ---
 
-## Cosa fa
+## The problem it solves
+
+Windows 11 ships with active telemetry, Copilot, OneDrive, dozens of useless services and preinstalled apps you never asked for. You can disable them one by one — but after the next reinstall, it all starts over.
+
+WinOpt is a suite of scripts you run **once** after a clean Windows 11 installation and get a quiet, private and fast machine. The experience of running Windows LTSC, without buying a volume license or giving up the Store and security updates.
+
+**Who it's for**
+
+- People who reinstall Windows often and want to automate optimizations
+- People managing multiple PCs who want reproducible configurations
+- Power users, privacy-focused users, gamers who want to reduce background noise
+- People who want to understand what is being changed (everything is documented and logged)
+
+**Who it's NOT for**
+
+- People who actively use OneDrive, Teams consumer, Copilot or Windows Recall
+- Corporate environments managed by MDM/Intune
+- People who prefer to keep Windows in the default Microsoft configuration
+
+---
+
+## What it does
 
 ### Privacy
-- Disabilita telemetria, diagnostica, CEIP e advertising ID
-- Disabilita Cortana, Bing nella ricerca, Copilot e Windows Recall
-- Blocca Activity History, sincronizzazione cross-device, Find My Device
-- Blocca installazione automatica driver via Windows Update
-- DNS over HTTPS — Cloudflare 1.1.1.1 con fallback al DNS del router locale
+- Disables telemetry, diagnostics, CEIP and advertising ID
+- Disables Cortana, Bing in search, Copilot and Windows Recall
+- Blocks Activity History, cross-device sync, Find My Device
+- Blocks automatic driver installation via Windows Update
+- DNS over HTTPS — Cloudflare 1.1.1.1 with fallback to local router DNS
 
 ### Performance
-- Disabilita servizi non essenziali: Xbox Live, DiagTrack, WerSvc, SysMain (su SSD)
-- Ottimizza parametri CPU: NetworkThrottlingIndex, SystemResponsiveness
-- Pagefile fisso su SSD (elimina frammentazione da ridimensionamento dinamico)
-- NTFS: disabilita generazione nomi 8.3 e aggiornamento LastAccessTime
-- Piano alimentazione Ultimate Performance su desktop, High Performance su laptop
+- Disables non-essential services: Xbox Live, DiagTrack, WerSvc, SysMain (on SSD)
+- Optimizes CPU parameters: NetworkThrottlingIndex, SystemResponsiveness
+- Fixed pagefile on SSD (eliminates fragmentation from dynamic resizing)
+- NTFS: disables 8.3 name generation and LastAccessTime update
+- Ultimate Performance power plan on desktops, High Performance on laptops
 
 ### UI/UX
-- Dark mode di sistema, estensioni file visibili, Explorer apre "Questo PC"
-- Menu contestuale classico Windows 10 (niente "Mostra altre opzioni")
-- MenuShowDelay 20ms (da 400ms), WaitToKillAppTimeout 3000ms
-- Rimuove Game DVR e limitazione app in background
+- System dark mode, visible file extensions, Explorer opens "This PC"
+- Classic Windows 10 context menu (no "Show more options" click)
+- MenuShowDelay 20ms (from 400ms), WaitToKillAppTimeout 3000ms
+- Removes Game DVR and background app throttling
 
 ### Edge
-- Nessun avvio automatico, nessun background mode quando chiuso
-- Nessun shopping assistant, sidebar, Microsoft Rewards, Spotlight
-- uBlock Origin installato forzatamente via policy
-- Do Not Track attivo, dati diagnostici disabilitati
+- No auto-start, no background mode when closed
+- No shopping assistant, sidebar, Microsoft Rewards, Spotlight
+- uBlock Origin force-installed via policy
+- Do Not Track enabled, diagnostic data disabled
 
 ### Debloat
-Rimuove ~30 app preinstallate: Xbox, Teams consumer, Widgets, Clipchamp, BingNews, Cortana, OneDrive (opzionale), Office Hub, LinkedIn, WhatsApp Desktop e altre.
+Removes ~30 preinstalled apps: Xbox, Teams consumer, Widgets, Clipchamp, BingNews, Cortana, OneDrive (optional), Office Hub, LinkedIn, WhatsApp Desktop and others.
 
-Conserva intenzionalmente: Store, Calcolatrice, Foto, Blocco note, Paint, Snipping Tool, Clock.
+Intentionally kept: Store, Calculator, Photos, Notepad, Paint, Snipping Tool, Clock.
 
-### Strumenti inclusi
-| Modulo | Funzione |
+### Included tools
+| Module | Function |
 |---|---|
-| ULTRA ADDON | Ottimizzazioni avanzate: WSearch off, SysMain off, trasparenze disabilitate |
-| ONEDRIVE | Toggle on/off reversibile con backup completo di registro e servizi |
-| APPS INSTALL | Installazione silenziosa via winget da lista JSON personalizzabile |
-| CLEAN SAFE | Pulizia temp, cache browser, WER, thumbnail cache, Cestino |
-| CLEAN DEEP | SAFE + cache Windows Update + DISM ComponentCleanup |
-| STARTUP CLEAN | Rimozione voci avvio automatico bloatware dalle Run key |
-| VERIFY | Check post-apply con score numerico, rileva drift dopo aggiornamenti |
-| POWER BOOST | Piano alimentazione ottimale con rilevamento laptop/desktop |
+| ULTRA ADDON | Advanced optimizations: WSearch off, SysMain off, transparency disabled |
+| ONEDRIVE | Reversible on/off toggle with full registry and services backup |
+| APPS INSTALL | Silent installation via winget from a customizable JSON list |
+| CLEAN SAFE | Temp, browser cache, WER, thumbnail cache, Recycle Bin cleanup |
+| CLEAN DEEP | SAFE + Windows Update cache + DISM ComponentCleanup |
+| STARTUP CLEAN | Removal of bloatware autostart entries from Run keys |
+| VERIFY | Post-apply check with numeric score, detects drift after updates |
+| POWER BOOST | Optimal power plan with laptop/desktop detection |
 
 ---
 
-## Come si usa
+## How to use
 
-**Requisiti**: Windows 11 (22H2, 23H2 o 24H2) — PowerShell 5.1+ — Account amministratore
+**Requirements**: Windows 11 (22H2, 23H2, 24H2 or 25H2) — PowerShell 5.1+ — Administrator account
 
 ```
-1. Scarica WinOpt_2.5.7.zip dalla pagina Releases
-2. Decomprimi in una cartella a scelta (es. C:\WinOpt-setup\)
-3. Tasto destro su LAUNCHER.cmd → "Esegui come amministratore"
-4. Dal menu scegli  →  Q  (QUICK STABLE)
-5. Leggi il summary a schermo al termine
-6. Riavvia Windows
+1. Download WinOpt_2.5.8.zip from the Releases page
+2. Extract to a folder of your choice (e.g. C:\WinOpt-setup\)
+3. Right-click LAUNCHER.cmd → "Run as administrator"
+4. From the menu select → Q (QUICK STABLE)
+5. Read the on-screen summary when done
+6. Restart Windows
 ```
 
-**QUICK STABLE** applica nell'ordine consigliato: BASELINE → EDGE → UIUX → VERIFY.
-È la sequenza sicura per un primo setup completo.
+**QUICK STABLE** applies in the recommended order: BASELINE → EDGE → UIUX → VERIFY.
+This is the safe sequence for a complete first-time setup.
 
-Tutti i log vengono salvati in `C:\WinOpt\Logs\` con nome `MODULO_AZIONE_DATA.log`.
-
----
-
-## Reversibilità
-
-Prima di ogni modifica viene creato automaticamente un **Restore Point di sistema**.
-In caso di problemi: Start → digita `rstrui` → Invio → segui la procedura guidata.
-
-I valori originali di registro, servizi e task vengono salvati in `C:\WinOpt\State\Backup\`
-prima di ogni run. Il modulo OneDrive usa questi backup per il ripristino completo.
+All logs are saved to `C:\WinOpt\Logs\` with the name `MODULE_ACTION_DATE.log`.
 
 ---
 
-## Struttura del progetto
+## Reversibility
+
+Before every change, a **system Restore Point** is automatically created.
+If something goes wrong: Start → type `rstrui` → Enter → follow the wizard.
+
+Original registry values, services and tasks are saved to `C:\WinOpt\State\Backup\`
+before every run. The OneDrive module uses these backups for full restoration.
+
+---
+
+## Project structure
 
 ```
 WinOpt/
-├── LAUNCHER.cmd                     ← Punto di ingresso — UAC una sola volta
-├── MANIFEST_SHA256.txt              ← Hash SHA256 di tutti i file per verifica integrità
+├── LAUNCHER.cmd                     ← Entry point — UAC elevation once only
+├── MANIFEST_SHA256.txt              ← SHA256 hash of all files for integrity verification
 ├── Modules/
 │   ├── _COMMON/
-│   │   ├── Common.ps1               ← Funzioni condivise (logging, registry, backup)
-│   │   └── Preflight.ps1            ← Check pre-esecuzione (PS version, spazio, admin)
+│   │   ├── Common.ps1               ← Shared functions (logging, registry, backup)
+│   │   └── Preflight.ps1            ← Pre-execution checks (PS version, space, admin)
 │   ├── Config/
-│   │   └── WinOpt.config.psd1       ← Configurazione (profilo, WSearch, DoH)
-│   ├── 01_BASELINE/                 ← Telemetria, servizi, task, debloat, DNS, pagefile
-│   ├── 02_UIUX/                     ← Dark mode, Explorer, menu contestuale, animazioni
-│   ├── 03_EDGE/                     ← Policy Edge + preferenze utente + uBlock
-│   ├── 04_VERIFY/                   ← Verifica stato sistema con score
-│   ├── 10_ULTRA_ADDON/              ← Ottimizzazioni avanzate (da usare dopo BASELINE)
-│   ├── 20_ONEDRIVE/                 ← Gestione OneDrive: OFF / ON / STATUS
-│   ├── 30_APPS/                     ← Installazione app via winget + policy JSON
-│   ├── 40_CLEAN/                    ← Pulizia disco: SAFE / DEEP / AUDIT
-│   ├── 50_STARTUP/                  ← Pulizia voci avvio automatico
-│   └── 90_LAB/                      ← Power Boost (piano alimentazione)
+│   │   └── WinOpt.config.psd1       ← Configuration (profile, WSearch, DoH)
+│   ├── 01_BASELINE/                 ← Telemetry, services, tasks, debloat, DNS, pagefile
+│   ├── 02_UIUX/                     ← Dark mode, Explorer, context menu, animations
+│   ├── 03_EDGE/                     ← Edge policies + user preferences + uBlock
+│   ├── 04_VERIFY/                   ← System state check with score
+│   ├── 10_ULTRA_ADDON/              ← Advanced optimizations (run after BASELINE)
+│   ├── 20_ONEDRIVE/                 ← OneDrive management: OFF / ON / STATUS
+│   ├── 30_APPS/                     ← App installation via winget + JSON policy
+│   ├── 40_CLEAN/                    ← Disk cleanup: SAFE / DEEP / AUDIT
+│   ├── 50_STARTUP/                  ← Autostart entries cleanup
+│   └── 90_LAB/                      ← Power Boost (power plan)
 └── Docs/
-    └── ARCHITECTURE.md              ← Descrizione architettura interna
+    ├── ARCHITECTURE.md              ← Internal architecture description
+    └── WinOpt_Complete_Guide_v2.5.8.docx  ← Full guide with explanation of every setting
 ```
 
 ---
 
-## Documentazione tecnica
+## Technical documentation
 
-Il file `TECHNICAL_GUIDE.md` nella root contiene la documentazione completa per sviluppatori:
-architettura, ogni chiave di registro modificata, logica di ogni modulo e decisioni di design.
+The file `TECHNICAL_GUIDE.md` in the root contains the complete developer documentation:
+architecture, every modified registry key, logic of each module and design decisions.
 
----
-
-## Sicurezza
-
-- Non disabilita mai Windows Defender
-- Non tocca driver di sistema o componenti kernel
-- Ogni modifica ha backup automatico prima dell'esecuzione
-- Restore Point di sistema creato prima di ogni run
-- Verifica integrità file tramite `MANIFEST_SHA256.txt`
-
-Per segnalare vulnerabilità o problemi di sicurezza vedi [SECURITY.md](SECURITY.md).
+The file `Docs/WinOpt_Complete_Guide_v2.5.8.docx` contains a detailed explanation of every single setting — what it does, why it is applied, and what value it is set to.
 
 ---
 
-## Contribuire
+## Security
 
-Pull request benvenute. Vedi [CONTRIBUTING.md](CONTRIBUTING.md) per le linee guida.
+- Never disables Windows Defender
+- Does not touch system drivers or kernel components
+- Every change has automatic backup before execution
+- System Restore Point created before every run
+- File integrity verification via `MANIFEST_SHA256.txt`
+
+To report vulnerabilities or security issues see [SECURITY.md](SECURITY.md).
+
+---
+
+## Contributing
+
+Pull requests welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## Disclaimer
 
-> ⚠️ Questa suite modifica servizi, registro di sistema e configurazioni Windows.
-> L'autore non è responsabile per eventuali danni derivanti dall'utilizzo.
-> **Usare sempre su sistema con backup recente.**
-> Non affiliata con Microsoft.
+> ⚠️ This suite modifies Windows services, registry and configurations.
+> The author is not responsible for any damage resulting from its use.
+> **Always use on a system with a recent backup.**
+> **For personal devices only — not intended for corporate or managed environments.**
+> Not affiliated with Microsoft.
 
 ---
 
-## Licenza
+## License
 
 [MIT](LICENSE) — © 2025 WinOpt Contributors
